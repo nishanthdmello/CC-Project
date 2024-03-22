@@ -19,7 +19,7 @@ def set_key():
         client.write(key, value)
         return f"Successfully set {key} to {value}"
     except Exception as e:
-        return f"Error setting {key}: {str(e)}", 500
+        return f"Error settin  {key}: {str(e)}", 500
 
 # Controller for getting the value of a key from etcd
 @app.route('/get', methods=['GET'])
