@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from etcd import Client, EtcdKeyNotFound
 
-# Initialize Flask application
+
 app = Flask(__name__)
 
-# Initialize etcd client
+
 client = Client(host='localhost', port=5007)
 
-# Controller for setting a key-value pair in etcd
+
 @app.route('/set', methods=['POST'])
 def set_key():
     key = request.json.get('key')
@@ -21,7 +21,7 @@ def set_key():
     except Exception as e:
         return f"Error settin  {key}: {str(e)}", 500
 
-# Controller for getting the value of a key from etcd
+
 @app.route('/get', methods=['GET'])
 def get_key():
     key = request.args.get('key')
@@ -45,6 +45,6 @@ def get_all_keys():
     except Exception as e:
         return f"Error getting all key-value pairs: {str(e)}", 500
 
-# Run the Flask application
+
 if __name__ == '__main__':
     app.run(debug=True)
