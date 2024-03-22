@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from etcd import Client, EtcdKeyNotFound
 
 # Initialize Flask application
@@ -36,6 +36,14 @@ def get_key():
     except Exception as e:
         return f"Error getting value for {key}: {str(e)}", 500
 
+@app.route('/getall', methods=['GET'])
+def get_all_keys():
+    try:
+        response = client.read('/', recursive=True)
+        key_values = {node.key: node.value for node in response.leaves}
+        return jsonify(key_values)
+    except Exception as e:
+        return f"Error getting all key-value pairs: {str(e)}", 500
 
 # Run the Flask application
 if __name__ == '__main__':
