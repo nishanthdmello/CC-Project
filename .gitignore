@@ -1,0 +1,8 @@
+/myenv/*
+/.DS_Store
+/*.wal
+/server/myenv
+/curl.txt
+/python-etcd3-master
+/default.etcd3
+/default.etcd
