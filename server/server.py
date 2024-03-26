@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import etcd3
 
 app = Flask(__name__)
-etcd = etcd3.client(port=4001)
+etcd = etcd3.client(port=2379)
 
 # PUT operation
 @app.route('/put', methods=['POST'])
