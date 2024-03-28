@@ -45,6 +45,7 @@ def get_all_keys():
     except Exception as e:
         return f"Error getting all key-value pairs: {str(e)}", 500
 
+# DELETE  Operation 
 @app.route('/delete',methods=['DELETE'])
 def delete_key():
         key=request.args.get('key')
