@@ -45,5 +45,17 @@ def get_all_keys():
     except Exception as e:
         return f"Error getting all key-value pairs: {str(e)}", 500
 
+@app.route('/delete',methods=['DELETE'])
+def delete_key():
+        key=request.args.get('key')
+        if key is None:
+            return jsonify({'error': 'Key parameter is required'}), 400
+        try:
+            val=etcd.delete(key,prev_kv=True,return_response=False)
+            return f"  deleted succesfully",200
+        except Exception as e:
+            return f"Error deleting the key-value pairs: {str(e)}", 500
+        
+
 if __name__ == '__main__':
     app.run(debug=True)
