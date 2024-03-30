@@ -56,7 +56,27 @@ def delete_key():
             return f"  deleted succesfully",200
         except Exception as e:
             return f"Error deleting the key-value pairs: {str(e)}", 500
+  
+@app.route('/update', methods=['PUT'])
+def update():
+        data = request.get_json()
+        key = data.get('key') 
+        value = data.get('value') 
+
+        if not key or not value:
+            return jsonify({'error': 'Both key and value are required'}), 400
+
+        try:
+            # Check if the key exists before attempting an update
+            etcd.get(key) 
+
+            etcd.put(key, value)
+            return jsonify({'message': 'Key {} updated to {}'.format(key, value)}), 200
+        except etcd3.exceptions.KeyNotFoundError:
+            return jsonify({'error': 'Key not found'}), 404
         
+        except Exception as e:  
+            return jsonify({'error': 'An unexpected error occurred'}), 500  
 
 if __name__ == '__main__':
     app.run(debug=True)
