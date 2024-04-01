@@ -1,7 +1,12 @@
 from flask import Flask, request, jsonify
 import etcd3
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
+
+
 etcd = etcd3.client(port=2379)
 
 # PUT operation
