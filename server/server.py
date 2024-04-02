@@ -44,9 +44,9 @@ def get_all_keys():
         for key, value in etcd.get_all():
             decoded_value=key.decode('utf-8')
             decoded_key=value.key.decode('utf-8')
-            value_list.append((decoded_key, decoded_value))
+            value_list.append({"key":decoded_key, "value": decoded_value})
         print(value_list)
-        return jsonify({"key-value-pairs":value_list}), 200
+        return jsonify(value_list), 200
     except Exception as e:
         return f"Error getting all key-value pairs: {str(e)}", 500
 
