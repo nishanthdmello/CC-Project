@@ -13,28 +13,22 @@
         <div class="card">
             <div class="heading">Get all Keys</div>
             <div class="inside">
-                <button class="button" onclick="getall()" type="submit">Submit</button>
+                <button class="button" onclick="getall()" type="button">Submit</button>
             </div>
         </div>
         </div>
     </form>
     <div class="disp"></div>
-    <script>
-        const getall = () => {
+    <script>    
+       const getall = () => {
             fetch("http://127.0.0.1:5000/getall")
-                .then(response => {
-                    return response.json();
-                })
-                .then((data) => {
-                    appendData(data);
-
+                .then(response => response.json())
+                .then(data => {
+                    const mainContainer = document.querySelector(".disp");
+                    mainContainer.innerHTML = data.map(item => `
+                        <div>key: ${item.key}, value: ${item.value}</div>
+                    `).join('');
                 });
-            function appendData(data) {
-                var mainContainer = document.getElementsByClassName("disp")[0];
-                for (var i = 0; i < data.length; i++) {
-                    mainContainer.innerHTML += 'key:  ' + data[i].key + ' , ' + '  value :' + data[i].value + '<br>';
-                }
-            }
         }
     </script>
 </body>
