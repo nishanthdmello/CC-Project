@@ -13,48 +13,29 @@
         <div class="card">
             <div class="heading">Get all Keys</div>
             <div class="inside">
-                <!-- <div><input class="button" onclick="getall" type="submit" value="Submit"> -->
-            <div class="button" onclick="getall()" type="submit">get all</div>
-                </div>
+                <button class="button" onclick="getall()" type="submit">Submit</button>
             </div>
         </div>
+        </div>
     </form>
-    <div class="disp">
-      
-
-
- 
-
-
-
-
-
-    </div>
-    
+    <div class="disp"></div>
     <script>
-       
-        const getall= ()=>{
+        const getall = () => {
             fetch("http://127.0.0.1:5000/getall")
-            .then(response=>{
-                // data=response.json()
-                return response.json();
-            })
-            .then((data)=>{
-                // console.log(data);
-                appendData(data);
-                
-            });
+                .then(response => {
+                    return response.json();
+                })
+                .then((data) => {
+                    appendData(data);
+
+                });
             function appendData(data) {
-            var mainContainer = document.getElementsByClassName("disp")[0];
-            for(var i=0;i<data.length;i++)
-            {
-            mainContainer.innerHTML+= 'key:  ' + data[i].key+ ' , ' + '  value :'+ data[i].value+'<br>';
-        
-            }
-        
+                var mainContainer = document.getElementsByClassName("disp")[0];
+                for (var i = 0; i < data.length; i++) {
+                    mainContainer.innerHTML += 'key:  ' + data[i].key + ' , ' + '  value :' + data[i].value + '<br>';
+                }
             }
         }
-
     </script>
 </body>
 
