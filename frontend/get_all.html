@@ -19,14 +19,14 @@
         </div>
     </form>
     <div class="disp"></div>
-    <script>    
-       const getall = () => {
+    <script>
+        const getall = () => {
             fetch("http://127.0.0.1:5000/getall")
                 .then(response => response.json())
                 .then(data => {
                     const mainContainer = document.querySelector(".disp");
                     mainContainer.innerHTML = data.map(item => `
-                        <div>key: ${item.key}, value: ${item.value}</div>
+                        <div>${item.key} : ${item.value}</div>
                     `).join('');
                 });
         }

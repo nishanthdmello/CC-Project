@@ -60,10 +60,13 @@ html{
     font-size:35px;
     font-weight: bolder;
 }
-.disp{
-    font-family:monospace;
-    font-size:35px;
-    font-weight: bolder;
-    margin: auto;
 
+.disp
+{
+    padding-top: 70px;
+    display: flex;
+    font-size:25px;
+    font-weight: bold;
+    align-items: center;
+    flex-direction: column;
 }
