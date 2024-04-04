@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import etcd3
+import etcd3,requests
 from flask_cors import CORS
 
 
@@ -15,6 +15,16 @@ def put():
     data = request.get_json()
     key = data['key']
     value = data['value']
+    keypresent=False
+    response= requests.get('http://127.0.0.1:5000/getall')
+    list_=response.json()
+    print(list_)
+    for i in list_:
+        if i['key']==key:
+            keypresent=True
+            break
+    if keypresent:
+        return f"error : key is already present ", 403
     etcd.put(key, value)
     return jsonify({'message': 'Key {} set to {}'.format(key, value)}), 200
 
@@ -27,7 +37,7 @@ def get():
 
     try:
         value_bytes = etcd.get(key)
-        print(value_bytes)
+        # print(value_bytes)
         if value_bytes:
             value_string = value_bytes[0].decode('utf-8')
             return jsonify({'value': value_string}), 200
@@ -45,7 +55,7 @@ def get_all_keys():
             decoded_value=key.decode('utf-8')
             decoded_key=value.key.decode('utf-8')
             value_list.append({"key":decoded_key, "value": decoded_value})
-        print(value_list)
+        # print(value_list)
         return jsonify(value_list), 200
     except Exception as e:
         return f"Error getting all key-value pairs: {str(e)}", 500
@@ -58,7 +68,10 @@ def delete_key():
             return jsonify({'error': 'Key parameter is required'}), 400
         try:
             val=etcd.delete(key,prev_kv=True,return_response=False)
-            return f"  deleted succesfully",200
+            if(val):
+                return f"  deleted succesfully",200
+            else:
+                return f" error deleting key : key not found",404
         except Exception as e:
             return f"Error deleting the key-value pairs: {str(e)}", 500
   
@@ -81,7 +94,7 @@ def update():
             return jsonify({'error': 'Key not found'}), 404
         
         except Exception as e:  
-            return jsonify({'error': 'An unexpected error occurred'}), 500  
+            return jsonify({'error': f'An unexpected error occurred {str(e)}'}), 500  
 
 if __name__ == '__main__':
     app.run(debug=True)
