@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import etcd3,requests
 from flask_cors import CORS
-
+import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -77,24 +77,28 @@ def delete_key():
   
 @app.route('/update', methods=['PUT'])
 def update():
-        data = request.get_json()
-        key = data.get('key') 
-        value = data.get('value') 
+    data = request.get_json()
+    key = data.get('key') 
+    value = data.get('value') 
+    old_value = data.get('oldValue') 
 
-        if not key or not value:
-            return jsonify({'error': 'Both key and value are required'}), 400
+    print("Key:", key, "Old Value:", old_value, "New Value:", value) 
 
-        try:
-            # Check if the key exists before attempting an update
-            etcd.get(key) 
+    try:
+        result = etcd.replace(key, old_value, value)  
 
-            etcd.put(key, value)
+        if result:  
             return jsonify({'message': 'Key {} updated to {}'.format(key, value)}), 200
-        except etcd3.exceptions.KeyNotFoundError:
-            return jsonify({'error': 'Key not found'}), 404
+        else:  
+            return jsonify({'error': 'Key not found or values did not match'}), 409 
         
-        except Exception as e:  
-            return jsonify({'error': f'An unexpected error occurred {str(e)}'}), 500  
+
+    except etcd3.exceptions.Etcd3Exception as e:  
+        logging.error("Error during replace: %s", str(e))
+        return jsonify({'error': 'Key not found or values did not match'}), 409 
+    except Exception as e:  
+        logging.error("Unexpected error: %s", str(e))
+        return jsonify({'error': 'An unexpected error occurred'}), 500 
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,54 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add a Key</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style1.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
-
 <body>
-    <form>
-        <div class="card">
+    <div class="form-container"> 
+        <form class="card">
             <div class="heading">Add a Key</div>
             <div class="inside">
                 <div><input class="input" type="text" id="key" name="key" placeholder="Key"></div>
                 <div><input class="input" type="text" id="value" name="value" placeholder="Value"></div>
-                <button class="button" onclick="add()" type="button">Submit</button>
+                <button class="button" onclick="performAdd()" type="button">Add</button>
             </div>
-        </div>
-    </form>
-    <script>
-        function add() {
-            var addkey = document.getElementById("key").value;
-            var addval = document.getElementById("value").value;
-if (addkey.trim() === '' || addval.trim() === '') {alert("Please fill in both key and value fields.");}
-            fetch(`http://localhost:5000/put` , {
-                method: "POST",
-                headers:{'Content-Type': 'application/json'},
-                body:JSON.stringify({
-                    "key":addkey,
-                    "value":addval
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        alert("key and value is already present");
-                        document.getElementById("key").value = "";
-                        document.getElementById("value").value = "";
-                        return;
-                    }
-                    else{
-                        alert("key and value has been succesfully added to ETCD");
-                        document.getElementById("key").value = "";
-                        document.getElementById("value").value = "";     
-                        return;
-                    }
-                })
+        </form>
+    </div>
+    
+    <div class="disp"></div> 
 
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script> 
+
+    <script src="script.js"></script> 
+    <svg width="0" height="0">
+        <defs>
+            <pattern id="stripes" width="20" height="20" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="10" height="20" fill="#000" /> <rect x="10" y="0" width="10" height="20" fill="#fff" /> </pattern>
+        </defs>
+    </svg>
 </body>
-
 </html>
