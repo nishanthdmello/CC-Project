@@ -1,16 +1,28 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family:monospace;
+    font-family: monospace;
 }
 
-html{
-    height: 100vh;
-    width: 100vw;
-    background: radial-gradient(circle, #ff0202, #ffffff);
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url(https://creativevip.net/resource-images/15-cloud-computing-icons-1.png); 
+    background-size: cover; /* Ensure stripes fill the entire background */
+    animation: animateStripes 10s linear infinite; /* Animation details */
 }
 
-.button{
+@keyframes animateStripes {
+    0% { background-position: 0 0; }  /* Start from left */
+    50% { background-position: 20px 0; }  /* Move right halfway through */
+    100% { background-position: 0 0; }    /* Back to left at the end */
+}
+
+.button {
     width: 200px;
     border-radius: 10px;
     height: 50px;
@@ -19,13 +31,14 @@ html{
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: aliceblue;
-    background: linear-gradient(to bottom, #db58ff, #81029e);
+    color: white;  /* Button text color: white */
+    background: #000; /* Button background: black */
     margin: 20px;
     border-style: none;
+    transition: all 0.3s ease; 
 }
 
-.input{
+.input {
     width: 300px;
     border-radius: 10px;
     height: 50px;
@@ -35,14 +48,14 @@ html{
     border-style: none;
 }
 
-.inside{
+.inside {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,22 +64,53 @@ html{
     border-radius: 40px;
     margin: auto;
     margin-top: 12vh;
-    background: linear-gradient(to top,#9ff1f5, #9bf6b1 );
+    background: #fff; /* Form background: white */
+    border: 1px solid #000;  /* Form border: black, 1px solid */
 }
 
-.heading{
+.heading {
     margin-top: 60px;
     margin-bottom: 70px;
-    font-size:35px;
+    font-size: 35px;
     font-weight: bolder;
 }
 
-.disp
-{
+.disp {
     padding-top: 70px;
     display: flex;
-    font-size:25px;
+    font-size: 25px;
     font-weight: bold;
     align-items: center;
     flex-direction: column;
+}
+
+.title-container {
+    text-align: center;  
+}
+
+.intro-container {
+    text-align: center;
+    position: relative;  /* Needed for absolute positioning of title within container */
+  }
+  
+.title {
+    font-size: 48px; /* Adjust as needed */
+    opacity: 0; position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* Center the title within the container */
+    font-family: 'Dancing Script', cursive; /* Apply the fancy font */ 
+}
+
+.form-container {
+    opacity: 0;  
+}
+
+.title span { /* Target each letter */
+    opacity: 0; 
+}
+
+.button:hover {
+    background-color: #333; /* Darker color on hover */
+    transform: scale(1.05);   /* Slightly increase size */
 }
